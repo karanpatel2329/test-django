@@ -1,0 +1,4 @@
+1. To Check migrations => python3 manage.py makemigrations
+2. To do migrate => python3 manage.py migrate
+3. To Create Super user (admin) => python3 manage.py createsuperuser
+
