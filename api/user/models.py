@@ -8,6 +8,8 @@ class CustomUser(AbstractUser):
       
     username = None
     USERNAME_FIELD = 'emails'
+    
+    REQUIRED_FIELDS = [] # might be helpful in future
          
     phone = models.CharField(max_length=20, blank=True,null=True)
     gender = models.CharField(max_length=20, blank=True,null=True)
