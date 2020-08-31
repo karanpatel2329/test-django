@@ -27,7 +27,7 @@ def signin(request):
     username = request.POST['emails']
     
     
-    password = request.POST.get("password")
+    password = request.POST['password']
 
     if not re.match("/\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/gi", username):
         return JsonResponse({'error': 'Enter valid email id'})
@@ -84,6 +84,6 @@ class UserViewSet(viewsets.ModelViewSet):
     
     def get_permissions(self):
         try:
-            return [permission() for permission in self.permission_classes_by_action[self]] 
+            return [permission() for permission in self.permission_classes_by_action[self.action]] 
         except KeyError:
             return [permission() for permission in self.permission_classes] 
