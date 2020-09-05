@@ -15,32 +15,27 @@ def generate_session_token  (length=10):
 
 @csrf_exempt
 def signin(request):
-    
+        
     if not request.method == 'POST':
         return JsonResponse({'erro':'Send a post request with valid information'})
-    
-    username = request.POST['emails']
-<<<<<<< HEAD
-    
-    
-    password = request.POST['password']
-=======
-    password = request.POST.get("password")
->>>>>>> d2bba5c5b63b0c5575c13502b29b34e57ae5701a
 
-    if not re.match("/\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/gi", username):
+    username = request.POST['emails']
+    password = request.POST['password']
+    
+    #return JsonResponse({username:password})
+    if re.match("/\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/gi", username):
         return JsonResponse({'error': 'Enter valid email id'})
 
-    if len(password) <8:
+    if len(password) <4:
         return JsonResponse({'error':'ENter more charater in password'})
     
     UserModel =get_user_model()
 
     try:
-        user=UserModel.object.get(emails=username)
+        user=UserModel.objects.get(emails=username)
 
         if user.check_password(password):
-            user_dict= UserModel.object.filter(emails=username).values().first()
+            user_dict= UserModel.objects.filter(emails=username).values().first()
             user_dict.pop('password')
 
             if user.session_token != "0":
@@ -66,7 +61,7 @@ def signout(request, id):
     UserModel = get_user_model()
 
     try:
-        user = UserModel.object.get(pk=id)
+        user = UserModel.objects.get(pk=id)
         user.session_token = "0"
         user.save()
         logout(request)
